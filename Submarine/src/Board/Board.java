@@ -1,15 +1,15 @@
-package Bord;
+package Board;
 
 import Enum.Directions;
 import Submarine.Submarine;
 
-public class Bord {
+public class Board {
 	private final int LENGTH = 10;
 	private final int WHIDTH = 10;
 
 	private String[][] matBord;
 
-	public Bord() {
+	public Board() {
 		matBord = new String[LENGTH+2][WHIDTH+2];
 		for (int i = 0; i < matBord.length; i++) {
 			for (int j = 0; j < matBord.length; j++) {
@@ -88,5 +88,11 @@ public class Bord {
 			return false;
 
 		return true;
+	}
+	
+	public void setGuessInBord(int x, int y) {
+		if(matBord[x][y].equals("[]"))
+			matBord[x][y] = "bool";
+		matBord[x][y] = "$";
 	}
 }

@@ -1,7 +1,7 @@
 package Game;
 
-import Bord.Bord;
 import Submarine.Submarine;
+import Board.Board;
 import Enum.Directions;
 import Player.Player;
 
@@ -13,12 +13,15 @@ public class Game {
 //		int y[] = {6,7};
 //		Submarine submarine = new Submarine(x,y);
 //		game.createSubmarineInBord(submarine);
-		
+//		
 //		System.out.println(game.isLegal(3, 5, Directions.LEFT ));
 		
 //		submarine.CreateSubmarine(1);
 		
-		Player player = new Player();
+		Player player = new Player("Ayala","ayalla120120@gmail.com",0583250512f);
+		player.setGuessArr();
+//		player.ObjectReaderDemo();
+		player.replay("src/myFiles/objFile1.dat");
 	
 	}
 

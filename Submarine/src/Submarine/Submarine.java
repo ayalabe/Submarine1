@@ -1,12 +1,13 @@
 package Submarine;
 
 import java.util.Random;
+
+import Board.Board;
 import Enum.Directions;
-import Bord.Bord;
 
 public class Submarine {
 
-	static Random rand = new Random();
+	public static Random rand = new Random();
 	private int[] x;
 	private int[] y;
 	Directions directions;
@@ -14,7 +15,7 @@ public class Submarine {
 
 
 
-	public Submarine(int size, Bord bord) {
+	public Submarine(int size, Board bord) {
 		index = 0;
 		directions = Directions.DIFOLTE;
 		CreateSubmarine(size, bord);
@@ -42,26 +43,29 @@ public class Submarine {
 		index++;
 	}
 
-	private int[] addShape(int x, int y, Bord bord) {
-//		int[] point;
-//		int[] tempX;
-//		int[] tempY;
-//		do {
-//			point = getCordinatAraundCenter(point);
-//			tempX[0] = point[0];
-//			tempY[0] = point[1];
-//		}while(!bord. isLegal(point[0], point[1], Directions.DIFOLTE));
+	private int[] addShape(int x, int y, Board bord) {
+		//		int[] point;
+		//		int[] tempX;
+		//		int[] tempY;
+		//		do {
+		//			point = getCordinatAraundCenter(point);
+		//			tempX[0] = point[0];
+		//			tempY[0] = point[1];
+		//		}while(!bord. isLegal(point[0], point[1], Directions.DIFOLTE));
 		return null;
 	}
-	public void CreateSubmarine(int size, Bord bord) {
+	public void CreateSubmarine(int size, Board bord) {
 		switch(size) {
 		case 1:
 			CreateSubmarine1(size, bord);
-		case 2:
+			break;
+		case 2,3:
+			CreateSubmarine2(size, bord);
+			break;
 		}
 	}
 
-	public void CreateSubmarine1(int size, Bord bord) {
+	public void CreateSubmarine1(int size, Board bord) {
 		int[] centerPoint;
 		int[] tempX = new int[1];
 		int[] tempY = new int[1];
@@ -74,19 +78,28 @@ public class Submarine {
 		this.y = tempY;
 		bord.createSubmarineInBord(this);
 	}
-	
-	public void CreateSubmarine2(int size, Bord bord) {
-//		CreateSubmarine1(size, bord);
-//		int[] tempX = new int[2];
-//		int[] tempY = new int[2];
-//		int[] point = new int[2];
-//		do {
-//			point = getCordinatAraundCenter(this.x[0], this.y[0]);
-//		}while(!bord. isLegal(point[0], point[1], this.directions));
-//		tempX = {this.x[0], point[0]};
-//		tempY = {this.x[1], point[1]};
-//		point = getCordinatAraundCenter(this.x[0], this.y[0]);
-		
+
+	public void CreateSubmarine2(int size, Board bord) {
+		int[] tempX = new int[size];
+		int[] tempY = new int[size];
+		int index = 0;
+		int[] point = new int[2];
+		do {
+			point = randomIndex();
+		}while(!bord. isLegal(point[0], point[1], this.directions));
+		while(index < size) {
+			tempX[index] = point[0];
+			tempY[index] = point[1];
+			if(index == size - 1)
+				break;
+			do {
+				point = getCordinatAraundCenter(tempX[index], tempY[index]);
+			}while(!bord. isLegal(point[0], point[1], this.directions));
+			index++;
+		}
+		this.x = tempX;
+		this.y = tempY;
+		bord.createSubmarineInBord(this);
 	}
 
 
@@ -105,23 +118,23 @@ public class Submarine {
 		switch(randBecause) {
 		case 0:  //up
 			newPoint[0] = x;
-			newPoint[1] = y++;
-			this.directions = Directions.UP;
+			newPoint[1] = ++y;
+			this.directions = Directions.DOWN;
 			break;
 		case 1://down
 			newPoint[0] = x;
-			newPoint[1] = y--;
-			this.directions = Directions.DOWN;
+			newPoint[1] = --y;
+			this.directions = Directions.UP;
 			break;
 		case 2://right
-			newPoint[0] = x++;
-			newPoint[1] = y;
-			this.directions = Directions.RIGHT;
-			break;
-		case 3://left
-			newPoint[0] = x--;
+			newPoint[0] = ++x;
 			newPoint[1] = y;
 			this.directions = Directions.LEFT;
+			break;
+		case 3://left
+			newPoint[0] = --x;
+			newPoint[1] = y;
+			this.directions = Directions.RIGHT;
 			break;
 		}
 		return newPoint;
